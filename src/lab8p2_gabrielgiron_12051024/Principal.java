@@ -308,20 +308,9 @@ public class Principal extends javax.swing.JFrame implements Runnable{
 
     private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
         // TODO add your handling code here:
-        UpdateTable();
+        hilo.start();
     }//GEN-LAST:event_ComenzarActionPerformed
 
-    private void UpdateTable()
-    {
-        DefaultTableModel m = (DefaultTableModel) Corredores.getModel(); 
-        int a = 10;
-        for(int i = 0; i < m.getRowCount(); i++)
-        {
-            m.setValueAt(a, i, m.getColumnCount() - 1);
-            a = a+10;
-        }
-        
-    }
     private void UpdateFrame()
     {
         AdminCarro AC = new AdminCarro("./Carros.txt");
@@ -397,14 +386,74 @@ public class Principal extends javax.swing.JFrame implements Runnable{
     Thread hilo = new Thread(this);
     @Override
     public void run() {
+        AdminCarro AC = new AdminCarro("./Carros.txt");
+        AC.cargarArchivo();
         Random R = new Random();
         DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
-        try {
-            
-            
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        int totalcarros = M.getRowCount();
+        while(true)
+        {
+            try {
+                for (int i = 0; i < totalcarros; i++) 
+                {
+                    int ID =(Integer) M.getValueAt(i, 0);
+                    for(int j = 0; j < AC.getListaCarros().size(); j++)
+                    {
+                        if(ID == AC.getListaCarros().get(j).getNumID())
+                        {
+                            if(AC.getListaCarros().get(j) instanceof McQueen)
+                            {
+                                int d = 30 + R.nextInt(170);
+                                AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                            }
+                            else if(AC.getListaCarros().get(j) instanceof Convertible)
+                            {
+                                int d = 20+R.nextInt(180);
+                                AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                            }
+                            else if(AC.getListaCarros().get(j) instanceof Nascar)
+                            {
+                                int d = 40 + R.nextInt(140);
+                                AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                            }
+                            System.out.println( j+" "+ AC.getListaCarros().get(j).getDistancia());
+                        }
+                    }
+                }
+                int cent = 0;
+                for(int i = 0; i < totalcarros; i++)
+                {
+                    int ID =(Integer) M.getValueAt(i, 0);
+                    int D = 0;
+                    for(int j = 0; j < AC.getListaCarros().size(); j++)
+                    {
+                        if(ID == AC.getListaCarros().get(j).getNumID())
+                        {
+                            D = AC.getListaCarros().get(j).getDistancia();
+                            M.setValueAt(D, i, 2);
+                            break;
+                        }
+                    }
+                    M.setValueAt(D, i, 2);
+                    if(D == LargoPista)
+                        cent = 1;
+                }
+                Corredores.setModel(M);
+                if(cent == 1)
+                {
+                    for (int i = 0; i < AC.getListaCarros().size(); i++) {
+                        if(AC.getListaCarros().get(i).getDistancia() >= LargoPista)
+                        {
+                            JOptionPane.showMessageDialog(null, AC.getListaCarros().get(i).getCorredor() + " Gana la Carrera!!");
+                            break;
+                        }
+                    }
+                    break;
+                }
+                Thread.sleep(500);  
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
