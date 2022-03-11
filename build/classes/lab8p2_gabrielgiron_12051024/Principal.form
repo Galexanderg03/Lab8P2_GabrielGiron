@@ -71,7 +71,7 @@
                           <Component id="LargoPistaField" max="32767" attributes="0"/>
                           <Component id="NamePistaField" max="32767" attributes="0"/>
                           <Component id="jButton1" alignment="0" pref="136" max="32767" attributes="0"/>
-                          <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Restart" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -117,7 +117,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="TipoBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Restart" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="Guardar" min="-2" max="-2" attributes="0"/>
@@ -131,6 +131,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Comenzar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComenzarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Pausar">
       <Properties>
@@ -271,10 +274,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="Restart">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reiniciar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RestartActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

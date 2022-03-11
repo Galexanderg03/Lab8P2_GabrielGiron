@@ -6,6 +6,9 @@
 package lab8p2_gabrielgiron_12051024;
 
 import java.awt.Color;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JColorChooser;
@@ -16,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Galex
  */
-public class Principal extends javax.swing.JFrame {
+public class Principal extends javax.swing.JFrame implements Runnable{
 
     /**
      * Creates new form Principal
@@ -56,11 +59,16 @@ public class Principal extends javax.swing.JFrame {
         LargoPistaField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Restart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Comenzar.setText("Comenzar");
+        Comenzar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComenzarActionPerformed(evt);
+            }
+        });
 
         Pausar.setText("Pausar");
 
@@ -118,7 +126,12 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Reiniciar");
+        Restart.setText("Reiniciar");
+        Restart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,7 +178,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(LargoPistaField)
                             .addComponent(NamePistaField)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(Restart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -202,7 +215,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TipoBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ColorButton)
-                    .addComponent(jButton2))
+                    .addComponent(Restart))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Guardar)
                 .addContainerGap(24, Short.MAX_VALUE))
@@ -276,7 +289,6 @@ public class Principal extends javax.swing.JFrame {
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         // TODO add your handling code here:
         Carro C = (Carro) AutosGuardados.getSelectedItem();
-        System.out.println(C.getCorredor());
         DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
         String Corredor = C.getCorredor();
         int NumID = C.getNumID();
@@ -285,6 +297,31 @@ public class Principal extends javax.swing.JFrame {
         Corredores.setModel(M);
     }//GEN-LAST:event_AgregarActionPerformed
 
+    private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel M = new DefaultTableModel();
+        M.addColumn("Identificador");
+        M.addColumn("Corredor");
+        M.addColumn("Distancia");
+        Corredores.setModel(M);
+    }//GEN-LAST:event_RestartActionPerformed
+
+    private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
+        // TODO add your handling code here:
+        UpdateTable();
+    }//GEN-LAST:event_ComenzarActionPerformed
+
+    private void UpdateTable()
+    {
+        DefaultTableModel m = (DefaultTableModel) Corredores.getModel(); 
+        int a = 10;
+        for(int i = 0; i < m.getRowCount(); i++)
+        {
+            m.setValueAt(a, i, m.getColumnCount() - 1);
+            a = a+10;
+        }
+        
+    }
     private void UpdateFrame()
     {
         AdminCarro AC = new AdminCarro("./Carros.txt");
@@ -331,6 +368,7 @@ public class Principal extends javax.swing.JFrame {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Agregar;
     private javax.swing.JComboBox<String> AutosGuardados;
@@ -346,9 +384,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField NumIDField;
     private javax.swing.JButton Pausar;
     private javax.swing.JLabel PistaLabel;
+    private javax.swing.JButton Restart;
     private javax.swing.JComboBox<String> TipoBox;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -356,4 +394,17 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     private int LargoPista;
+    Thread hilo = new Thread(this);
+    @Override
+    public void run() {
+        Random R = new Random();
+        DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
+        try {
+            
+            
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
