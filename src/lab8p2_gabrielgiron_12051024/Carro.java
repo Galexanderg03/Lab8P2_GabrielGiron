@@ -16,6 +16,7 @@ public class Carro implements Serializable{
     private int NumID;
     private String Corredor;
     private Color color;
+    private int Distancia = 0;
 
     public Carro(int NumID, String Corredor, Color color) {
         this.NumID = NumID;
@@ -45,6 +46,14 @@ public class Carro implements Serializable{
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public int getDistancia() {
+        return Distancia;
+    }
+
+    public void setDistancia(int Distancia) {
+        this.Distancia = Distancia;
     }
 
     @Override

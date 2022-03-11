@@ -5,7 +5,12 @@
  */
 package lab8p2_gabrielgiron_12051024;
 
+import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JColorChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +23,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        UpdateFrame();
     }
 
     /**
@@ -39,11 +45,11 @@ public class Principal extends javax.swing.JFrame {
         AutosGuardados = new javax.swing.JComboBox<>();
         Agregar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        NumID = new javax.swing.JTextField();
+        NumIDField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        Corredor = new javax.swing.JTextField();
+        CorredorField = new javax.swing.JTextField();
         TipoBox = new javax.swing.JComboBox<>();
-        Color = new javax.swing.JButton();
+        ColorButton = new javax.swing.JButton();
         Guardar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         NamePistaField = new javax.swing.JTextField();
@@ -75,6 +81,11 @@ public class Principal extends javax.swing.JFrame {
         AutosGuardados.setModel(new DefaultComboBoxModel());
 
         Agregar.setText("Agregar");
+        Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Numero Identificador");
 
@@ -82,15 +93,30 @@ public class Principal extends javax.swing.JFrame {
 
         TipoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "McQueen", "Convertible", "Nascar"}));
 
-        Color.setText("Color");
+        ColorButton.setText("Color");
+        ColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColorButtonActionPerformed(evt);
+            }
+        });
 
         Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Nombre Pista");
 
         jLabel4.setText("Largo");
 
         jButton1.setText("Usar Pista");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Reiniciar");
 
@@ -117,15 +143,15 @@ public class Principal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(TipoBox, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Color, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(ColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Corredor))
+                                .addComponent(CorredorField))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(NumID))
+                                .addComponent(NumIDField))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(AutosGuardados, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -164,18 +190,18 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(NumID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NumIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LargoPistaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(Corredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CorredorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TipoBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Color)
+                    .addComponent(ColorButton)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Guardar)
@@ -186,6 +212,90 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorButtonActionPerformed
+        // TODO add your handling code here:
+        Color color = JColorChooser.showDialog(this, "Selecciona el Color", Color.RED);
+        ColorButton.setBackground(color);
+    }//GEN-LAST:event_ColorButtonActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        // TODO add your handling code here:
+        AdminCarro AC = new AdminCarro("./Carros.txt");
+        AC.cargarArchivo();
+        String Corredor = CorredorField.getText();
+        int ID = Integer.parseInt(NumIDField.getText());
+        Color C = ColorButton.getBackground();
+        String Tipo = (String) TipoBox.getSelectedItem();
+        int cent = 0;
+        for (int i = 0; i < AC.getListaCarros().size(); i++) {
+            if(ID == AC.getListaCarros().get(i).getNumID())
+            {
+                cent = 1;
+                break;
+            }
+        }
+        if(cent == 1)
+        {
+            JOptionPane.showMessageDialog(null, "Ese NumId ya existe");
+        }
+        else
+        {
+            if(Tipo.equals("McQueen"))
+            {
+                Carro Car = new McQueen(ID,Corredor,C);
+                AC.setCarro(Car);
+            }
+            else if(Tipo.equals("Convertible"))
+            {
+                Carro Car = new Convertible(ID,Corredor,C);
+                AC.setCarro(Car);
+            }
+            else if(Tipo.equals("Nascar"))
+            {
+                Carro Car = new Nascar(ID,Corredor,C);
+                AC.setCarro(Car);
+            }
+            AC.escribirArchivo();
+            CorredorField.setText("");
+            NumIDField.setText("");
+        }
+        UpdateFrame();
+    }//GEN-LAST:event_GuardarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String Name = NamePistaField.getText();
+        int Largo = Integer.parseInt(LargoPistaField.getText());
+        LargoPista = Largo;
+        PistaLabel.setText("Pista: "+Name);
+        LargoLabel.setText("Largo: "+Largo);
+        NamePistaField.setText("");
+        LargoPistaField.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
+        // TODO add your handling code here:
+        Carro C = (Carro) AutosGuardados.getSelectedItem();
+        System.out.println(C.getCorredor());
+        DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
+        String Corredor = C.getCorredor();
+        int NumID = C.getNumID();
+        Object[] O = {NumID,Corredor,C.getDistancia()};
+        M.addRow(O);
+        Corredores.setModel(M);
+    }//GEN-LAST:event_AgregarActionPerformed
+
+    private void UpdateFrame()
+    {
+        AdminCarro AC = new AdminCarro("./Carros.txt");
+        AC.cargarArchivo();
+        DefaultComboBoxModel M = (DefaultComboBoxModel) AutosGuardados.getModel();
+        M.removeAllElements();
+        for (int i = 0; i < AC.getListaCarros().size(); i++) {
+            M.addElement(AC.getListaCarros().get(i));
+        }
+        AutosGuardados.setModel(M);
+    }
     /**
      * @param args the command line arguments
      */
@@ -225,15 +335,15 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton Agregar;
     private javax.swing.JComboBox<String> AutosGuardados;
     private javax.swing.JProgressBar Barra;
-    private javax.swing.JButton Color;
+    private javax.swing.JButton ColorButton;
     private javax.swing.JButton Comenzar;
-    private javax.swing.JTextField Corredor;
+    private javax.swing.JTextField CorredorField;
     private javax.swing.JTable Corredores;
     private javax.swing.JButton Guardar;
     private javax.swing.JLabel LargoLabel;
     private javax.swing.JTextField LargoPistaField;
     private javax.swing.JTextField NamePistaField;
-    private javax.swing.JTextField NumID;
+    private javax.swing.JTextField NumIDField;
     private javax.swing.JButton Pausar;
     private javax.swing.JLabel PistaLabel;
     private javax.swing.JComboBox<String> TipoBox;
@@ -245,4 +355,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    private int LargoPista;
 }

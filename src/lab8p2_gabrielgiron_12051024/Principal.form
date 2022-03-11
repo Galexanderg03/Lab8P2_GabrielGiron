@@ -43,17 +43,17 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="TipoBox" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="Color" max="32767" attributes="0"/>
+                              <Component id="ColorButton" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="Corredor" max="32767" attributes="0"/>
+                              <Component id="CorredorField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="NumID" max="32767" attributes="0"/>
+                              <Component id="NumIDField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="AutosGuardados" min="-2" pref="157" max="-2" attributes="0"/>
@@ -103,20 +103,20 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="NumID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="NumIDField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LargoPistaField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Corredor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CorredorField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="TipoBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Color" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ColorButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -205,20 +205,23 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AgregarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Numero Identificador"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="NumID">
+    <Component class="javax.swing.JTextField" name="NumIDField">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nombre Corredor"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="Corredor">
+    <Component class="javax.swing.JTextField" name="CorredorField">
     </Component>
     <Component class="javax.swing.JComboBox" name="TipoBox">
       <Properties>
@@ -230,15 +233,21 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="Color">
+    <Component class="javax.swing.JButton" name="ColorButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Color"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ColorButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Guardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GuardarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -258,6 +267,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Usar Pista"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
