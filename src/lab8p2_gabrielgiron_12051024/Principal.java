@@ -60,6 +60,7 @@ public class Principal extends javax.swing.JFrame implements Runnable{
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         Restart = new javax.swing.JButton();
+        Renaudar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +72,11 @@ public class Principal extends javax.swing.JFrame implements Runnable{
         });
 
         Pausar.setText("Pausar");
+        Pausar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PausarActionPerformed(evt);
+            }
+        });
 
         PistaLabel.setText("Pista: ");
 
@@ -133,6 +139,13 @@ public class Principal extends javax.swing.JFrame implements Runnable{
             }
         });
 
+        Renaudar.setText("Renaudar");
+        Renaudar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RenaudarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,10 +158,12 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Comenzar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Pausar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addComponent(Pausar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Renaudar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(PistaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LargoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -177,9 +192,9 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LargoPistaField)
                             .addComponent(NamePistaField)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Restart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +204,8 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                     .addComponent(Comenzar)
                     .addComponent(Pausar)
                     .addComponent(PistaLabel)
-                    .addComponent(LargoLabel))
+                    .addComponent(LargoLabel)
+                    .addComponent(Renaudar))
                 .addGap(18, 18, 18)
                 .addComponent(Barra, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -288,6 +304,8 @@ public class Principal extends javax.swing.JFrame implements Runnable{
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         // TODO add your handling code here:
+        AdminCarro AC = new AdminCarro("./Carros.txt");
+        AC.cargarArchivo();
         Carro C = (Carro) AutosGuardados.getSelectedItem();
         DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
         String Corredor = C.getCorredor();
@@ -308,8 +326,32 @@ public class Principal extends javax.swing.JFrame implements Runnable{
 
     private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
         // TODO add your handling code here:
-        hilo.start();
+        if(LargoPista <= 0)
+        {
+            JOptionPane.showMessageDialog(null, "No Ha Ingresado un Largo de la Pista");
+        }
+        else
+        {
+            hilo.start();
+        }
     }//GEN-LAST:event_ComenzarActionPerformed
+
+    private void PausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PausarActionPerformed
+        // TODO add your handling code here:
+        if(Pause == false)
+        {
+            Pause = true;
+        }
+    }//GEN-LAST:event_PausarActionPerformed
+
+    private void RenaudarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RenaudarActionPerformed
+        // TODO add your handling code here:
+        if(Pause == true)
+        {
+            Pause = false;
+            hilo.start();
+        }
+    }//GEN-LAST:event_RenaudarActionPerformed
 
     private void UpdateFrame()
     {
@@ -373,6 +415,7 @@ public class Principal extends javax.swing.JFrame implements Runnable{
     private javax.swing.JTextField NumIDField;
     private javax.swing.JButton Pausar;
     private javax.swing.JLabel PistaLabel;
+    private javax.swing.JButton Renaudar;
     private javax.swing.JButton Restart;
     private javax.swing.JComboBox<String> TipoBox;
     private javax.swing.JButton jButton1;
@@ -383,9 +426,11 @@ public class Principal extends javax.swing.JFrame implements Runnable{
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     private int LargoPista;
+    private boolean Pause = false;
     Thread hilo = new Thread(this);
     @Override
     public void run() {
+        Barra.setMaximum(LargoPista);
         AdminCarro AC = new AdminCarro("./Carros.txt");
         AC.cargarArchivo();
         Random R = new Random();
@@ -394,6 +439,8 @@ public class Principal extends javax.swing.JFrame implements Runnable{
         while(true)
         {
             try {
+                while(Pause == false)
+                {
                 for (int i = 0; i < totalcarros; i++) 
                 {
                     int ID =(Integer) M.getValueAt(i, 0);
@@ -435,7 +482,7 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                         }
                     }
                     M.setValueAt(D, i, 2);
-                    if(D == LargoPista)
+                    if(D >= LargoPista)
                         cent = 1;
                 }
                 Corredores.setModel(M);
@@ -445,12 +492,16 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                         if(AC.getListaCarros().get(i).getDistancia() >= LargoPista)
                         {
                             JOptionPane.showMessageDialog(null, AC.getListaCarros().get(i).getCorredor() + " Gana la Carrera!!");
+                            for (int j = 0; j < AC.getListaCarros().size(); j++) {
+                                AC.getListaCarros().get(i).setDistancia(0);
+                            }
                             break;
                         }
                     }
                     break;
                 }
-                Thread.sleep(500);  
+                Thread.sleep(500);
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }

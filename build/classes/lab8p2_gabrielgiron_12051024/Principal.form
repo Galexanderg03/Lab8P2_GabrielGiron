@@ -31,10 +31,12 @@
                   <Group type="102" attributes="0">
                       <Component id="Comenzar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="Pausar" min="-2" pref="89" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="Pausar" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="Renaudar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="23" max="32767" attributes="0"/>
                       <Component id="PistaLabel" min="-2" pref="123" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="LargoLabel" min="-2" pref="132" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -70,12 +72,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="LargoPistaField" max="32767" attributes="0"/>
                           <Component id="NamePistaField" max="32767" attributes="0"/>
-                          <Component id="jButton1" alignment="0" pref="136" max="32767" attributes="0"/>
+                          <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
                           <Component id="Restart" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,6 +90,7 @@
                   <Component id="Pausar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="PistaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LargoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Renaudar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="Barra" min="-2" pref="68" max="-2" attributes="0"/>
@@ -139,6 +142,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Pausar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PausarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="PistaLabel">
       <Properties>
@@ -280,6 +286,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RestartActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="Renaudar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Renaudar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RenaudarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
