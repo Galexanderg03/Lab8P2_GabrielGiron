@@ -312,12 +312,27 @@ public class Principal extends javax.swing.JFrame implements Runnable{
         AdminCarro AC = new AdminCarro("./Carros.txt");
         AC.cargarArchivo();
         Carro C = (Carro) AutosGuardados.getSelectedItem();
+        int cent = 0;
         DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
-        String Corredor = C.getCorredor();
-        int NumID = C.getNumID();
-        Object[] O = {NumID,Corredor,C.getDistancia()};
-        M.addRow(O);
-        Corredores.setModel(M);
+        for (int i = 0; i < M.getRowCount(); i++) {
+            if(C.getNumID() == (Integer)M.getValueAt(i, 0))
+            {
+                cent = 1;
+                break;
+            }
+        }
+        if(cent == 1)
+        {
+            JOptionPane.showMessageDialog(null, "Ese Carro Ya esta en la Tabla");
+        }
+        else
+        {
+            String Corredor = C.getCorredor();
+            int NumID = C.getNumID();
+            Object[] O = {NumID,Corredor,C.getDistancia()};
+            M.addRow(O);
+            Corredores.setModel(M);
+        }
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
