@@ -90,6 +90,11 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                 "Identificador", "Corredor", "Distancia"
             }
         ));
+        Corredores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CorredoresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Corredores);
 
         AutosGuardados.setModel(new DefaultComboBoxModel());
@@ -317,11 +322,19 @@ public class Principal extends javax.swing.JFrame implements Runnable{
 
     private void RestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestartActionPerformed
         // TODO add your handling code here:
+        AdminCarro AC = new AdminCarro("./Carros.txt");
+        AC.cargarArchivo();
+        for (int j = 0; j < AC.getListaCarros().size(); j++) {
+            AC.getListaCarros().get(j).setDistancia(0);
+        }
         DefaultTableModel M = new DefaultTableModel();
         M.addColumn("Identificador");
         M.addColumn("Corredor");
         M.addColumn("Distancia");
         Corredores.setModel(M);
+        this.dispose();
+        Principal P = new Principal();
+        P.setVisible(true);
     }//GEN-LAST:event_RestartActionPerformed
 
     private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
@@ -349,9 +362,26 @@ public class Principal extends javax.swing.JFrame implements Runnable{
         if(Pause == true)
         {
             Pause = false;
-            hilo.start();
         }
     }//GEN-LAST:event_RenaudarActionPerformed
+
+    private void CorredoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CorredoresMouseClicked
+        // TODO add your handling code here:
+        AdminCarro AC = new AdminCarro("./Carros.txt");
+        AC.cargarArchivo();
+        int R = Corredores.getSelectedRow();
+        Color C = Color.RED;
+        Barra.setValue((Integer)Corredores.getValueAt(R, 2));
+        for(int i = 0; i < AC.getListaCarros().size(); i++)
+        {
+            if((Integer)Corredores.getValueAt(R, 0) == AC.getListaCarros().get(i).getNumID())
+            {
+                C = AC.getListaCarros().get(i).getColor();
+                break;
+            }
+        }
+        Barra.setBackground(C);
+    }//GEN-LAST:event_CorredoresMouseClicked
 
     private void UpdateFrame()
     {
@@ -434,6 +464,7 @@ public class Principal extends javax.swing.JFrame implements Runnable{
         AdminCarro AC = new AdminCarro("./Carros.txt");
         AC.cargarArchivo();
         Random R = new Random();
+        int cent = 0;
         DefaultTableModel M = (DefaultTableModel) Corredores.getModel();
         int totalcarros = M.getRowCount();
         while(true)
@@ -441,33 +472,32 @@ public class Principal extends javax.swing.JFrame implements Runnable{
             try {
                 while(Pause == false)
                 {
-                for (int i = 0; i < totalcarros; i++) 
-                {
-                    int ID =(Integer) M.getValueAt(i, 0);
-                    for(int j = 0; j < AC.getListaCarros().size(); j++)
+                    for (int i = 0; i < totalcarros; i++) 
                     {
-                        if(ID == AC.getListaCarros().get(j).getNumID())
+                        int ID =(Integer) M.getValueAt(i, 0);
+                        for(int j = 0; j < AC.getListaCarros().size(); j++)
                         {
-                            if(AC.getListaCarros().get(j) instanceof McQueen)
+                            if(ID == AC.getListaCarros().get(j).getNumID())
                             {
-                                int d = 30 + R.nextInt(170);
-                                AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                                if(AC.getListaCarros().get(j) instanceof McQueen)
+                                {
+                                    int d = 30 + R.nextInt(170);
+                                    AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                                }
+                                else if(AC.getListaCarros().get(j) instanceof Convertible)
+                                {
+                                    int d = 20+R.nextInt(180);
+                                    AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                                }
+                                else if(AC.getListaCarros().get(j) instanceof Nascar)
+                                {
+                                    int d = 40 + R.nextInt(140);
+                                    AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
+                                }
+                                System.out.println( j+" "+ AC.getListaCarros().get(j).getDistancia());
                             }
-                            else if(AC.getListaCarros().get(j) instanceof Convertible)
-                            {
-                                int d = 20+R.nextInt(180);
-                                AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
-                            }
-                            else if(AC.getListaCarros().get(j) instanceof Nascar)
-                            {
-                                int d = 40 + R.nextInt(140);
-                                AC.getListaCarros().get(j).setDistancia(AC.getListaCarros().get(j).getDistancia() + d);
-                            }
-                            System.out.println( j+" "+ AC.getListaCarros().get(j).getDistancia());
                         }
                     }
-                }
-                int cent = 0;
                 for(int i = 0; i < totalcarros; i++)
                 {
                     int ID =(Integer) M.getValueAt(i, 0);
@@ -492,9 +522,7 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                         if(AC.getListaCarros().get(i).getDistancia() >= LargoPista)
                         {
                             JOptionPane.showMessageDialog(null, AC.getListaCarros().get(i).getCorredor() + " Gana la Carrera!!");
-                            for (int j = 0; j < AC.getListaCarros().size(); j++) {
-                                AC.getListaCarros().get(i).setDistancia(0);
-                            }
+                            Thread.currentThread().interrupt();
                             break;
                         }
                     }
@@ -502,6 +530,8 @@ public class Principal extends javax.swing.JFrame implements Runnable{
                 }
                 Thread.sleep(500);
                 }
+                if(cent == 1)
+                    break;
             } catch (InterruptedException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
